@@ -12,7 +12,7 @@ public class CartItem {
 
     public CartItem(Product product){
         this.product = product;
-        this.addItems(BigInteger.ONE.intValue());
+        this.addItems(quantity);
     }
 
     public Product getProduct() {
