@@ -5,10 +5,10 @@ import com.pentazon.product.Product;
 import com.pentazon.product.ProductService;
 import com.pentazon.product.ProductServiceImpl;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -17,6 +17,7 @@ public class Cart {
     private Logger logger = Logger.getLogger(Cart.class.getName());
     private Map<String, CartItem> items;
     private ProductService productService;
+    private BigDecimal total =BigDecimal.ZERO;
 
 
     public Cart(){
@@ -25,7 +26,7 @@ public class Cart {
 
     }
 
-    public void addToCart(Product product){
+    public void addToCart(Product product, int quantity){
         if (verifiedProduct(product)){
             CartItem item = items.get(product.getProductId());
             if (item == null){
@@ -61,11 +62,23 @@ public class Cart {
     public boolean removeFromCart(Product product){
         boolean removed = false;
         if (product != null){
-            this.items.remove(product);
+            this.items.remove(product.getProductId());
             removed = true;
         }
         return removed;
     }
+
+    public BigDecimal calculateTotal(){
+        if(!items.isEmpty()){
+            this.total = BigDecimal.ZERO;
+            Iterator<CartItem> cartItem = items.values().iterator();
+            while(cartItem.hasNext()){
+                this.total = this.total.add(cartItem.next().getTotal());
+            }
+        }
+        return this.getTotal();
+    }
+
 
     public  Map<String, CartItem> getItems() {
         return items;
@@ -73,5 +86,13 @@ public class Cart {
 
     private void setItems( Map<String, CartItem> items) {
         this.items = items;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 }
