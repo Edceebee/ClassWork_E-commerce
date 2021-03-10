@@ -23,25 +23,25 @@ class CartTest {
 
     @Test
     void addToCart(){
-        assertTrue(cart.getProducts().isEmpty());
+        assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
         cart.addToCart(plantainChips);
-        assertFalse(cart.getProducts().isEmpty());
-        assertEquals(1, cart.getProducts().size());
+        assertFalse(cart.getItems().isEmpty());
+        assertEquals(1, cart.getItems().size());
     }
 
     @Test
     void removeCart(){
-        assertTrue(cart.getProducts().isEmpty());
+        assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
         cart.addToCart(plantainChips);
-        assertFalse(cart.getProducts().isEmpty());
-        assertEquals(1, cart.getProducts().size());
+        assertFalse(cart.getItems().isEmpty());
+        assertEquals(1, cart.getItems().size());
 
         boolean result = cart.removeFromCart(plantainChips);
         assertTrue(result);
-        assertTrue(cart.getProducts().isEmpty());
+        assertTrue(cart.getItems().isEmpty());
     }
 }

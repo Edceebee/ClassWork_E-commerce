@@ -2,37 +2,48 @@ package com.pentazon.shopping;
 
 import com.pentazon.exceptions.ProductExceptions;
 import com.pentazon.product.Product;
-import com.pentazon.product.ProductRepoMock;
 import com.pentazon.product.ProductService;
 import com.pentazon.product.ProductServiceImpl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Cart {
 
     private Logger logger = Logger.getLogger(Cart.class.getName());
-
-    private List<Product> products;
+    private Map<String, CartItem> items;
     private ProductService productService;
 
 
     public Cart(){
-        products = new ArrayList<>();
+        items = new HashMap<>();
         productService = new ProductServiceImpl();
 
     }
 
     public void addToCart(Product product){
         if (verifiedProduct(product)){
-//            Product verifiedProduct = productService.findProductById(product.getProductId());
-            this.products.add(product);
+            CartItem item = items.get(product.getProductId());
+            if (item == null){
+                item = new CartItem(product);
+                item.setProduct(product);
+               // item.addItems(BigInteger.ONE.intValue());
+            }
+
+            item.addItems(BigInteger.ONE.intValue());
+            items.put(product.getProductId(), item);
+            }
+
         }
 
-    }
 
-    private boolean verifiedProduct(Product product){
+
+
+        private boolean verifiedProduct(Product product){
         boolean verified = false;
         if (product != null){
             try {
@@ -50,17 +61,17 @@ public class Cart {
     public boolean removeFromCart(Product product){
         boolean removed = false;
         if (product != null){
-            this.products.remove(product);
+            this.items.remove(product);
             removed = true;
         }
         return removed;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public  Map<String, CartItem> getItems() {
+        return items;
     }
 
-    private void setProducts(List<Product> products) {
-        this.products = products;
+    private void setItems( Map<String, CartItem> items) {
+        this.items = items;
     }
 }
