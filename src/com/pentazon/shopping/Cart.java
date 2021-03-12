@@ -26,32 +26,28 @@ public class Cart {
 
     }
 
-    public void addToCart(Product product, int quantity){
+    public void addToCart(Product product){
         if (verifiedProduct(product)){
             CartItem item = items.get(product.getProductId());
-            if (item == null){
+            if (item == null) {
                 item = new CartItem(product);
-                item.setProduct(product);
-               // item.addItems(BigInteger.ONE.intValue());
             }
 
             item.addItems(BigInteger.ONE.intValue());
             items.put(product.getProductId(), item);
             }
 
-        }
+            }
 
 
-
-
-        private boolean verifiedProduct(Product product){
+            private boolean verifiedProduct(Product product){
         boolean verified = false;
         if (product != null){
             try {
                 Product verifiedProduct = productService.findProductById(product.getProductId());
                 verified = true;
             } catch (ProductExceptions ex){
-                //logger.log(System.Logger.Level.INFO)
+                //logger.log(System.Logger.Level.INFO, ex.message())
                 //@todo add log message
 
             }
@@ -84,7 +80,7 @@ public class Cart {
         return items;
     }
 
-    private void setItems( Map<String, CartItem> items) {
+    public void setItems( Map<String, CartItem> items) {
         this.items = items;
     }
 

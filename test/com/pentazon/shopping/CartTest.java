@@ -26,7 +26,7 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips, 9);
+        cart.addToCart(plantainChips);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(1, cart.getItems().size());
     }
@@ -36,7 +36,7 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips, 9);
+        cart.addToCart(plantainChips);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(1, cart.getItems().size());
 
@@ -46,33 +46,80 @@ class CartTest {
     }
 
     @Test
-    void  calculateTotal(){
+    void calculateTotal(){
         assertTrue(cart.getItems().isEmpty());
-        Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
+        Product plantainChips = new Product("Adunni Chips", "Savoury plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips, 9);
-
-        Product shirt = new Product();
+        cart.addToCart(plantainChips);
+        Product shirt = new Product("Vintage Shirt", "Vintage Versace shirt", new BigDecimal(5000));
         shirt.setProductId("AD003");
-        cart.addToCart(shirt, 9);
+        cart.addToCart(shirt);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(2, cart.getItems().size());
         BigDecimal cartTotal = cart.calculateTotal();
-        //assertEquals(5050, cartTotal.intValue());
+        assertEquals(5050, cartTotal.intValue());
+    }
+
+    @Test
+    void calculateTotalWithMultipleChips(){
+        assertTrue(cart.getItems().isEmpty());
+        Product plantainChips = new Product("Adunni Chips", "Savoury plantain chips", new BigDecimal(50));
+        plantainChips.setProductId("AD001");
+        cart.addToCart(plantainChips);
+        Product shirt = new Product("Vintage Shirt", "Vintage Versace shirt", new BigDecimal(5000));
+        shirt.setProductId("AD003");
+        cart.addToCart(shirt);
+        assertFalse(cart.getItems().isEmpty());
+        assertEquals(2, cart.getItems().size());
+        BigDecimal cartTotal = cart.calculateTotal();
+        assertEquals(5050, cartTotal.intValue());
 
         CartItem chipsItem = cart.getItems().get(plantainChips.getProductId());
-
-        assertEquals(1, chipsItem.getQuantity());
-        chipsItem = cart.getItems().get(shirt.getProductId());
         assertEquals(1, chipsItem.getQuantity());
 
-        cart.addToCart(shirt, 9);
+        CartItem shirtItem = cart.getItems().get(shirt.getProductId());
+        assertEquals(1, shirtItem.getQuantity());
+
+        cart.addToCart(plantainChips);
         assertEquals(2, cart.getItems().size());
-        chipsItem = cart.getItems().get(shirt.getProductId());
-        assertEquals(10, chipsItem.getQuantity());
+        chipsItem = cart.getItems().get(plantainChips.getProductId());
+        assertEquals(2, chipsItem.getQuantity());
         cartTotal = cart.calculateTotal();
-        assertEquals(5500, cartTotal.intValue());
+        assertEquals(5100, cartTotal.intValue());
+    }
 
+    @Test
+    void calculateTotalWithMultipleChipsAndShirts(){
+        assertTrue(cart.getItems().isEmpty());
+        Product plantainChips = new Product("Adunni Chips", "Savoury plantain chips", new BigDecimal(50));
+        plantainChips.setProductId("AD001");
+        cart.addToCart(plantainChips);
+        Product shirt = new Product("Vintage Shirt", "Vintage Versace shirt", new BigDecimal(5000));
+        shirt.setProductId("AD003");
+        cart.addToCart(shirt);
+        assertFalse(cart.getItems().isEmpty());
+        assertEquals(2, cart.getItems().size());
+        BigDecimal cartTotal = cart.calculateTotal();
+        assertEquals(5050, cartTotal.intValue());
 
+        CartItem chipsItem = cart.getItems().get(plantainChips.getProductId());
+        assertEquals(1, chipsItem.getQuantity());
+
+        CartItem shirtItem = cart.getItems().get(shirt.getProductId());
+        assertEquals(1, shirtItem.getQuantity());
+
+        cart.addToCart(plantainChips);
+        assertEquals(2, cart.getItems().size());
+        chipsItem = cart.getItems().get(plantainChips.getProductId());
+        assertEquals(2, chipsItem.getQuantity());
+        cartTotal = cart.calculateTotal();
+        assertEquals(5100, cartTotal.intValue());
+
+        cart.addToCart(shirt);
+        assertEquals(2, cart.getItems().size());
+        shirtItem = cart.getItems().get(shirt.getProductId());
+        assertEquals(2, shirtItem.getQuantity());
+        cartTotal = cart.calculateTotal();
+        assertEquals(10100, cartTotal.intValue());
     }
 }
