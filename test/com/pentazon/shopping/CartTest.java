@@ -26,7 +26,7 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(1, cart.getItems().size());
     }
@@ -36,7 +36,7 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(1, cart.getItems().size());
 
@@ -50,10 +50,10 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savoury plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         Product shirt = new Product("Vintage Shirt", "Vintage Versace shirt", new BigDecimal(5000));
         shirt.setProductId("AD003");
-        cart.addToCart(shirt);
+        cart.addToCart(shirt, 5);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(2, cart.getItems().size());
         BigDecimal cartTotal = cart.calculateTotal();
@@ -65,10 +65,10 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savoury plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         Product shirt = new Product("Vintage Shirt", "Vintage Versace shirt", new BigDecimal(5000));
         shirt.setProductId("AD003");
-        cart.addToCart(shirt);
+        cart.addToCart(shirt, 5);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(2, cart.getItems().size());
         BigDecimal cartTotal = cart.calculateTotal();
@@ -80,7 +80,7 @@ class CartTest {
         CartItem shirtItem = cart.getItems().get(shirt.getProductId());
         assertEquals(1, shirtItem.getQuantity());
 
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         assertEquals(2, cart.getItems().size());
         chipsItem = cart.getItems().get(plantainChips.getProductId());
         assertEquals(2, chipsItem.getQuantity());
@@ -93,10 +93,10 @@ class CartTest {
         assertTrue(cart.getItems().isEmpty());
         Product plantainChips = new Product("Adunni Chips", "Savoury plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         Product shirt = new Product("Vintage Shirt", "Vintage Versace shirt", new BigDecimal(5000));
         shirt.setProductId("AD003");
-        cart.addToCart(shirt);
+        cart.addToCart(shirt, 5);
         assertFalse(cart.getItems().isEmpty());
         assertEquals(2, cart.getItems().size());
         BigDecimal cartTotal = cart.calculateTotal();
@@ -108,14 +108,14 @@ class CartTest {
         CartItem shirtItem = cart.getItems().get(shirt.getProductId());
         assertEquals(1, shirtItem.getQuantity());
 
-        cart.addToCart(plantainChips);
+        cart.addToCart(plantainChips, 5);
         assertEquals(2, cart.getItems().size());
         chipsItem = cart.getItems().get(plantainChips.getProductId());
         assertEquals(2, chipsItem.getQuantity());
         cartTotal = cart.calculateTotal();
         assertEquals(5100, cartTotal.intValue());
 
-        cart.addToCart(shirt);
+        cart.addToCart(shirt, 5);
         assertEquals(2, cart.getItems().size());
         shirtItem = cart.getItems().get(shirt.getProductId());
         assertEquals(2, shirtItem.getQuantity());

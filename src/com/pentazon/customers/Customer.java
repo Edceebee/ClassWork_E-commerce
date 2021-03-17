@@ -1,7 +1,5 @@
 package com.pentazon.customers;
 
-import com.pentazon.Address;
-
 import java.util.List;
 
 /**

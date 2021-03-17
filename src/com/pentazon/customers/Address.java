@@ -1,4 +1,4 @@
-package com.pentazon;
+package com.pentazon.customers;
 
 public class Address {
 
