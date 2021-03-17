@@ -38,4 +38,12 @@ public abstract class Customer {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 }

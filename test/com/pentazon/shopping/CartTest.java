@@ -74,10 +74,10 @@ class CartTest {
         BigDecimal cartTotal = cart.calculateTotal();
         assertEquals(5050, cartTotal.intValue());
 
-        CartItem chipsItem = cart.getItems().get(plantainChips.getProductId());
+        Item chipsItem = cart.getItems().get(plantainChips.getProductId());
         assertEquals(1, chipsItem.getQuantity());
 
-        CartItem shirtItem = cart.getItems().get(shirt.getProductId());
+        Item shirtItem = cart.getItems().get(shirt.getProductId());
         assertEquals(1, shirtItem.getQuantity());
 
         cart.addToCart(plantainChips, 5);
@@ -102,10 +102,10 @@ class CartTest {
         BigDecimal cartTotal = cart.calculateTotal();
         assertEquals(5050, cartTotal.intValue());
 
-        CartItem chipsItem = cart.getItems().get(plantainChips.getProductId());
+        Item chipsItem = cart.getItems().get(plantainChips.getProductId());
         assertEquals(1, chipsItem.getQuantity());
 
-        CartItem shirtItem = cart.getItems().get(shirt.getProductId());
+        Item shirtItem = cart.getItems().get(shirt.getProductId());
         assertEquals(1, shirtItem.getQuantity());
 
         cart.addToCart(plantainChips, 5);

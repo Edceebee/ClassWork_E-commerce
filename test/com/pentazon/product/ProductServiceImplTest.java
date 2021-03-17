@@ -9,9 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductServiceImplTest {
     ProductService productService;
+    Product product;
     @BeforeEach
     void setUp() {
         productService = new ProductServiceImpl();
+        product = new Product();
     }
 
     @AfterEach
@@ -37,6 +39,12 @@ class ProductServiceImplTest {
 
     }
 
+    @Test
+    void addProductWithName(){
+        product.setName(null);
+        assertThrows(ProductExceptions.class,
+                () -> productService.addProduct(product));
+    }
 
 
 }

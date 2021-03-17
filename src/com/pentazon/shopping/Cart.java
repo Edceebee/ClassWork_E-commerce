@@ -1,12 +1,14 @@
 package com.pentazon.shopping;
 
+import com.pentazon.customers.Address;
 import com.pentazon.exceptions.ProductExceptions;
+import com.pentazon.payment.PaymentCard;
 import com.pentazon.product.Product;
 import com.pentazon.product.ProductService;
 import com.pentazon.product.ProductServiceImpl;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+//import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,9 +17,11 @@ import java.util.logging.Logger;
 public class Cart {
 
     private Logger logger = Logger.getLogger(Cart.class.getName());
-    private Map<String, CartItem> items;
+    private Map<String, Item> items;
     private ProductService productService;
     private BigDecimal total =BigDecimal.ZERO;
+    private PaymentCard paymentCard;
+    private Address Address;
 
 
     public Cart(){
@@ -28,12 +32,12 @@ public class Cart {
 
     public void addToCart(Product product, int quantity){
         if (verifiedProduct(product)){
-            CartItem item = items.get(product.getProductId());
+            Item item = items.get(product.getProductId());
             if (item == null) {
-                item = new CartItem(product);
+                item = new Item(product);
             }
 
-            item.addItems(BigInteger.ONE.intValue());
+            item.addItems(BigDecimal.ONE.intValue());
             items.put(product.getProductId(), item);
             }
 
@@ -67,7 +71,7 @@ public class Cart {
     public BigDecimal calculateTotal(){
         if(!items.isEmpty()){
             this.total = BigDecimal.ZERO;
-            Iterator<CartItem> cartItem = items.values().iterator();
+            Iterator<Item> cartItem = items.values().iterator();
             while(cartItem.hasNext()){
                 this.total = this.total.add(cartItem.next().getTotal());
             }
@@ -76,11 +80,11 @@ public class Cart {
     }
 
 
-    public  Map<String, CartItem> getItems() {
+    public  Map<String, Item> getItems() {
         return items;
     }
 
-    public void setItems( Map<String, CartItem> items) {
+    public void setItems( Map<String, Item> items) {
         this.items = items;
     }
 
@@ -90,5 +94,18 @@ public class Cart {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public PaymentCard getPaymentCard() {
+        return paymentCard;
+    }
+
+    public void setPaymentCard(PaymentCard paymentCard) {
+        this.paymentCard = paymentCard;
+    }
+
+
+    public Address getDeliveryAddress() {
+        return Address;
     }
 }

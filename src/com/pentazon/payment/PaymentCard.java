@@ -1,7 +1,6 @@
 package com.pentazon.payment;
 
 import java.time.LocalDate;
-//import java.util.Date;
 
 public class PaymentCard {
     private String cardNumber;

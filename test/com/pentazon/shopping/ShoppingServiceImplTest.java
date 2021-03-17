@@ -1,5 +1,6 @@
 package com.pentazon.shopping;
 
+import com.pentazon.customers.Address;
 import com.pentazon.customers.Buyer;
 import com.pentazon.customers.Customer;
 import com.pentazon.exceptions.CheckOutException;
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShoppingServiceImplTest {
@@ -22,7 +25,7 @@ class ShoppingServiceImplTest {
    private ShoppingService shoppingService;
 
    @BeforeEach
-    void setUp(){
+    void setUp() throws CheckOutException {
        shoppingService = new ShoppingServiceImpl();
 
       ProductDB products = new ProductDB();
@@ -30,10 +33,16 @@ class ShoppingServiceImplTest {
        dozie= new Buyer();
        PaymentCard fbnVisa = new PaymentCard("123455", "Don Dozie", LocalDate.of(2025, 07, 21));
        dozie.getCards().add(fbnVisa);
-
        Cart dozieCart = new Cart();
+
        dozieCart.addToCart(products.getMockProducts().get("ADDO1"), 5);
 
+        dozieCart.setPaymentCard(dozie.getCards().get(0));
+       Address home = new Address();
+       home.setHouseNumber(19);
+       home.setStreet("Aso rock Avenue");
+       home.setCity("Aso Rock");
+       dozie.getAddresses()
        dozie.setCart(dozieCart);
    }
 
@@ -66,5 +75,38 @@ class ShoppingServiceImplTest {
         assertThrows(CheckOutException.class, () -> shoppingService.checkOut(dozie));
     }
 
+    @Test
+    void checkOut() {
+
+        try {
+            Map<String, Item> cartItems = dozie.getCart().getItems();
+            Order dozieOrder = shoppingService.checkOut(dozie);
+            assertNotNull(dozieOrder);
+            assertEquals(cartItems, dozieOrder.getOrderItem());
+            assertTrue(dozieOrder.isPaid());
+            } catch (CheckOutException e) {
+            e.printStackTrace();
+        }
+        }
+
+    @Test
+    void checkOutWithExpiredPaymentCard() {
+
+        try {
+            Map<String, Item> cartItems = dozie.getCart().getItems();
+            Address deliveryAddress = dozie.getCart().getDeliveryAddress();
+            Order dozieOrder = shoppingService.checkOut(dozie);
+            assertNotNull(dozieOrder);
+            assertEquals(cartItems, dozieOrder.getOrderItem());
+            assertTrue(dozieOrder.isPaid());
+        } catch (CheckOutException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
 }
+
