@@ -8,12 +8,12 @@ import com.pentazon.exceptions.ProductExceptions;
 
 public interface ProductService {
 
-//    Product findProductById(String productId);
+
     /**
-     * search for product
+     * search for product with specified id
+     * @param productId
+     *  @return
+     *  @throws ProductExceptions
      */
     public Product findProductById(String productId) throws ProductExceptions;
-//        return productRepo.getProductById(productId);
-//    }
-
-}
+  }
