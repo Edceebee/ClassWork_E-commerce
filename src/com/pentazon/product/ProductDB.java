@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductRepoMock {
+public class ProductDB {
 
     private Map<String, Product> mockProducts;
 
 
-    public ProductRepoMock(){
+    public ProductDB(){
         mockProducts = new HashMap<>();
         Product plantainChips = new Product("Adunni Chips", "Savory plantain chips", new BigDecimal(50));
         plantainChips.setProductId("AD001");
